@@ -21,7 +21,7 @@ Bienvenido, para continuar indique una fecha, marque si se trata de algun día e
 
 
 cuando = st.date_input("Cuando:")
-cuando = cuando.replace(hour=0, minute=0)
+st.write(cuando)
 especial = st.checkbox("Especial", value=False)
 feriado = st.checkbox("Feriado", value=False)
 fecha_inicio = cuando + timedelta(hours=10)
@@ -29,10 +29,9 @@ fecha_fin = cuando + timedelta(hours=22)
 
 # Crear un rango de fechas y horas
 rango_horas = [fecha_inicio + timedelta(hours=x) for x in range(12)]
-
+st.write(fecha_inicio)
 # Crear un DataFrame
 df = pd.DataFrame({'fecha_hora': rango_horas})
-
 if especial:
   df["especial"] =1  #OJO AQUI
 else:
@@ -50,13 +49,16 @@ df['hour'] = df['fecha_hora'].dt.hour
 df['day_of_week'] = df['fecha_hora'].dt.dayofweek
 df['day_of_month'] = df['fecha_hora'].dt.day
 df['day_of_year'] = df['fecha_hora'].dt.dayofyear
-df['hour'] = range(10,22)  #fix para streamlit
+df['hour'] = range(10,22)
+
 # Agregar columna para la semana del mes
 df['week_of_month'] = (df['day_of_month'] - 1) // 7 + 1
 
-df = df.drop(["fecha_hora"],axis=1)  #Eliminar datos no numericos
 
-if st.button('Resultados: ' ,type="primary"):  #No hay botones aqui
+df = df.drop(["fecha_hora"],axis=1)  #Eliminar datos no numericos
+st.dataframe(df) 
+
+if st.button('Resultados: ' ,type="primary"):
 
   data = tf.convert_to_tensor(df.to_numpy())
   prediccion = model.predict(data)
