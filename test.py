@@ -16,4 +16,4 @@ if st.button('Saludar'):
 
     # Calcular y mostrar la edad en años perro
     dog_age = age * 7
-    st.write(f'Tu edad en años perro es: {dog_age} años.')
+    st.write(f'Tu edad en años perro es de: {dog_age} años.')
